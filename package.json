@@ -46,9 +46,15 @@
     }
   ],
   "dependencies": {
+    "@walletconnect/web3-provider": "^1.7.7",
+    "bignumber.js": "^9.0.2",
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.2.27",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-is": "^18.0.0"
+    "react-is": "^18.0.0",
+    "web3": "^1.7.1",
+    "web3modal": "^1.9.6"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",

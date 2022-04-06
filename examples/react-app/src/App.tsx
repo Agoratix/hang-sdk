@@ -1,28 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
 
-import { Test } from 'hang-sdk';
+import { HangWalletPlugin } from 'hang-sdk';
 
 function App() {
-  const instance = new Test();
+  const sdk = new HangWalletPlugin();
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={() => sdk.mint()}>Mint a token</button>
     </div>
   );
 }
