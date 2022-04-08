@@ -31,12 +31,13 @@ export class HangWalletPlugin {
   web3Modal: Web3Modal;
   contractObject: IContractObject;
 
-  constructor() {
+  constructor(slug: string) {
+    console.log(slug);
     this.contractObject = {
       abi,
-      address: '0xB8FD76feE62cEdA58b33d2DB3c1dF445E9C2e3e2',
-      chain: 'rinkeby',
-      chain_id: 4,
+      address: '0xAB5a5aD2978204d0dD9F02d85b8DF60cA5977605',
+      chain: 'mumbai',
+      chain_id: 80001,
       id: 1,
       platform: 'ethereum',
       whitelist: [],
