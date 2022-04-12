@@ -1,1 +1,1 @@
-export * from './ContractObject';
+export * from './ProjectMetadata';
