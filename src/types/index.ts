@@ -1,1 +1,2 @@
-export * from './ContractObject';
+export * from './ProjectMetadata';
+export * from './events';
