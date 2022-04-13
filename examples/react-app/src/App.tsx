@@ -1,17 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './App.css';
 
 import { HangWalletPlugin } from 'hang-sdk';
 
 function App() {
+  const [isReady, setIsReady] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
-  const sdk = new HangWalletPlugin('some-project-slug');
+  const sdk = useMemo(() => new HangWalletPlugin('some-project-slug'), []);
 
   useEffect(() => {
-    // @ts-ignore
-    sdk.events.on('state-change', () => {
-      console.log('its ready');
+    sdk.events.on('STATE_CHANGE', async (params) => {
+      setIsReady(params.isReady);
+      const totalMintable = await sdk.fetchTotalMintable();
+      const currentPrice = await sdk.fetchCurrentPriceFormatted();
+      const totalMinted = await sdk.fetchTotalMintedPadded();
+      console.log({ totalMintable, currentPrice, totalMinted });
     });
+    sdk.events.on('ERROR', (params) => {
+      console.log(params);
+    });
+    sdk.events.on('TRANSACTION_SUBMITTED', (params) =>
+      console.log('TRANSACTION_SUBMITTED', params)
+    );
+    sdk.events.on('TRANSACTION_COMPLETED', (params) =>
+      console.log('TRANSACTION_COMPLETED', params)
+    );
+    sdk.events.on('WALLET_CONNECTED', (params) =>
+      console.log('WALLET_CONNECTED', params)
+    );
+
+    return () => {
+      sdk.events.removeAllListeners();
+    };
   }, []);
 
   return (
@@ -29,7 +49,9 @@ function App() {
         value={quantity}
         onChange={(e) => setQuantity(parseInt(e.target.value))}
       />
-      <button onClick={() => sdk.mint(quantity)}>Mint a token</button>
+      <button onClick={() => sdk.mint(quantity)}>
+        {isReady ? 'Mint a token' : 'Getting things ready'}
+      </button>
     </div>
   );
 }

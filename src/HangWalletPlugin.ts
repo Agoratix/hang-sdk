@@ -27,7 +27,7 @@ export class HangWalletPlugin extends HangCore {
   web3Modal: Web3Modal;
 
   constructor(slug: string) {
-    super(new Web3(), { slug: 'tya' });
+    super({ slug: 'tya' });
     this.fetchProjectMetadata(slug);
     this.web3Modal = new Web3Modal({
       cacheProvider: true,
@@ -35,14 +35,10 @@ export class HangWalletPlugin extends HangCore {
     });
   }
 
-  web3 = () => {
-    this.web3Instance = this.web3Instance || new Web3(this.provider!);
-    return this.web3Instance;
-  };
-
   autoconnect = async () => {
     if (this.web3Modal.cachedProvider) {
       this.provider = this.provider || (await this.web3Modal.connect());
+      this.web3(new Web3(this.provider));
       await this.onConnectComplete();
       return Promise.resolve();
     } else {
@@ -53,6 +49,7 @@ export class HangWalletPlugin extends HangCore {
   connect = async (): Promise<void> => {
     try {
       this.provider = await this.web3Modal.connect();
+      this.web3(new Web3(this.provider));
       await this.onConnectComplete();
     } catch (e) {
       Promise.reject(e);
@@ -60,11 +57,11 @@ export class HangWalletPlugin extends HangCore {
   };
 
   onConnectComplete = async () => {
-    if (!this.web3().eth) return;
+    if (!this.web3Instance.eth) return;
 
     await this.requestChainSwitchIfNeeded();
     await this.syncAccountAndContract();
-    // TODO: trigger a wallet connected event
+    this.events.emit('WALLET_CONNECTED', { address: this.getCurrentWallet() });
     this.addProviderEvents();
   };
 
@@ -74,7 +71,7 @@ export class HangWalletPlugin extends HangCore {
 
   fetchAccountData = async () => {
     // Get list of accounts of the connected wallet
-    const accounts = await this.web3().eth.getAccounts();
+    const accounts = await this.web3Instance.eth.getAccounts();
 
     // MetaMask does not give you all accounts, only the selected account
     this.accounts = accounts;
@@ -83,19 +80,25 @@ export class HangWalletPlugin extends HangCore {
   addProviderEvents = () => {
     this.provider!.on('accountsChanged', async () => {
       await this.syncAccountAndContract();
-      // TODO: trigger a wallet connected event
+      this.events.emit('WALLET_CONNECTED', {
+        address: this.getCurrentWallet(),
+      });
     });
+  };
+
+  getCurrentWallet = () => {
+    return this.accounts?.[0] || '';
   };
 
   requestChainSwitchIfNeeded = async () => {
     if (!this.projectData) return;
 
-    const currentChain = await this.web3().eth.getChainId();
+    const currentChain = await this.web3Instance.eth.getChainId();
 
     if (this.projectData.contract.chain_id != currentChain) {
       try {
-        // @ts-ignore: check later
-        await this.web3().currentProvider.request({
+        // @ts-ignore
+        await this.web3Instance?.currentProvider?.request({
           method: 'wallet_switchEthereumChain',
           params: [
             { chainId: Web3.utils.toHex(this.projectData.contract.chain_id) },
@@ -107,13 +110,13 @@ export class HangWalletPlugin extends HangCore {
         if (!networkParams) return;
 
         // @ts-ignore: check later
-        await this.web3().currentProvider.request({
+        await this.web3Instance.currentProvider.request({
           method: 'wallet_addEthereumChain',
           params: [networkMap[this.projectData.contract.chain_id]],
         });
 
         // @ts-ignore: check later
-        await this.web3().currentProvider.request({
+        await this.web3Instance.currentProvider.request({
           method: 'wallet_switchEthereumChain',
           params: [
             { chainId: Web3.utils.toHex(this.projectData.contract.chain_id) },
@@ -127,6 +130,6 @@ export class HangWalletPlugin extends HangCore {
     if (!this.projectData) return;
 
     await this.connect();
-    await this.mintTo(quantity, this.accounts?.[0] || '');
+    await this.mintTo(quantity, this.getCurrentWallet());
   }
 }
