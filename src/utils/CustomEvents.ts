@@ -1,24 +1,20 @@
 import events from 'events';
 
-import { FORMATTED_ERRORS } from './constants';
+import {
+  IErrorEventParams,
+  IStateChangeEventParams,
+  ITransactionCompletedEventParams,
+  ITransactionSubmittedEventParams,
+  IWalletConnectedEventParams,
+} from '../types';
 
 type CUSTOM_EVENTS = {
-  STATE_CHANGE: {
-    isReady: boolean;
-  };
-  ERROR: {
-    type: keyof typeof FORMATTED_ERRORS
-    message: string;
-  };
-  TRANSACTION_SUBMITTED: {
-    transactionHash: string;
-  };
-  TRANSACTION_COMPLETED: {
-    receipt: any;
-  };
-  WALLET_CONNECTED: {
-    address: string;
-  };
+  ERROR: IErrorEventParams;
+  STATE_CHANGE: IStateChangeEventParams;
+  TRANSACTION_COMPLETED: ITransactionCompletedEventParams;
+  TRANSACTION_SUBMITTED: ITransactionSubmittedEventParams;
+  WALLET_CONNECTED: IWalletConnectedEventParams;
+  WALLET_CHANGED: null,
 };
 
 export declare interface CustomEvents {

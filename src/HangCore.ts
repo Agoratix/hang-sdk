@@ -268,7 +268,7 @@ export class HangCore {
   postConfirm = async (error: any, transactionHash: string) => {
     if (error) {
       return this.events.emit('ERROR', {
-        type: error,
+        type: error.message,
         message: 'Failed to submit transaction',
       });
     }

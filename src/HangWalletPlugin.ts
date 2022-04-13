@@ -80,9 +80,7 @@ export class HangWalletPlugin extends HangCore {
   addProviderEvents = () => {
     this.provider!.on('accountsChanged', async () => {
       await this.syncAccountAndContract();
-      this.events.emit('WALLET_CONNECTED', {
-        address: this.getCurrentWallet(),
-      });
+      this.events.emit('WALLET_CHANGED', null);
     });
   };
 
