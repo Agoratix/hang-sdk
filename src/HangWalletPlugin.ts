@@ -132,4 +132,8 @@ export class HangWalletPlugin extends HangCore {
     await this.connect();
     await this.mintTo(quantity, this.getCurrentWallet());
   }
+
+  async balanceOfCurrentWallet() {
+    return this.balanceOfAddress(this.getCurrentWallet());
+  }
 }

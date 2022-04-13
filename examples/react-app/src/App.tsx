@@ -25,9 +25,11 @@ function App() {
     sdk.events.on('TRANSACTION_COMPLETED', (params) =>
       console.log('TRANSACTION_COMPLETED', params)
     );
-    sdk.events.on('WALLET_CONNECTED', (params) =>
+    sdk.events.on('WALLET_CONNECTED', async (params) => {
       console.log('WALLET_CONNECTED', params)
-    );
+      const balance = await sdk.balanceOfCurrentWallet();
+      console.log({ balance });
+    });
 
     return () => {
       sdk.events.removeAllListeners();
