@@ -89,7 +89,7 @@ export const CONTRACT_PLATFORMS = {
 };
 
 export const FORMATTED_ERRORS = {
-  'PROJECT_INFO_FETCCH_ERROR': 'Unable to fetch project information',
+  PROJECT_INFO_FETCCH_ERROR: 'Unable to fetch project information',
   'BASE_COLLECTION/CANNOT_MINT': "General onsale hasn't started yet",
   'BASE_COLLECTION/PURCHASE_DISABLED': 'Minting is currently disabled',
   'BASE_COLLECTION/INSUFFICIENT_ETH_AMOUNT':

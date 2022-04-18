@@ -19,18 +19,12 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "prepare": "tsdx build && husky install",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "release": "release-it"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "yarn lint --fix && yarn typescript"
-    }
   },
   "commitlint": {
     "extends": [
@@ -105,7 +99,7 @@
     "@types/react-dom": "^17.0.14",
     "babel-loader": "^8.2.4",
     "commitlint": "^16.2.3",
-    "husky": "^7.0.4",
+    "husky": "^7.0.0",
     "release-it": "^14.14.2",
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
