@@ -48,6 +48,7 @@
   "dependencies": {
     "@walletconnect/web3-provider": "^1.7.7",
     "bignumber.js": "^9.0.2",
+    "eslint-plugin-prettier": "3.4.1",
     "keccak256": "^1.0.6",
     "merkletreejs": "^0.2.27",
     "react": "^18.0.0",

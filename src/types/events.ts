@@ -5,7 +5,7 @@ export interface IStateChangeEventParams {
 }
 
 export interface IErrorEventParams {
-  type: keyof typeof FORMATTED_ERRORS
+  type: keyof typeof FORMATTED_ERRORS;
   message: string;
 }
 
@@ -20,4 +20,3 @@ export interface ITransactionCompletedEventParams {
 export interface IWalletConnectedEventParams {
   address: string;
 }
-

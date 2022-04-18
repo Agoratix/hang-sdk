@@ -14,7 +14,7 @@ type CUSTOM_EVENTS = {
   TRANSACTION_COMPLETED: ITransactionCompletedEventParams;
   TRANSACTION_SUBMITTED: ITransactionSubmittedEventParams;
   WALLET_CONNECTED: IWalletConnectedEventParams;
-  WALLET_CHANGED: null,
+  WALLET_CHANGED: null;
 };
 
 export declare interface CustomEvents {

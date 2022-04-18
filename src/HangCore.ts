@@ -105,20 +105,21 @@ export class HangCore {
   };
 
   fetchTotalMintable = async () => {
-    const totalMintable = await this.contractInstance!.methods.MAX_TOTAL_MINT().call();
+    const totalMintable =
+      await this.contractInstance!.methods.MAX_TOTAL_MINT().call();
     return parseInt(totalMintable);
   };
 
   fetchTotalMinted = async () => {
-    const totalMinted = await this.contractInstance!.methods.totalSupply().call();
+    const totalMinted =
+      await this.contractInstance!.methods.totalSupply().call();
     return parseInt(totalMinted);
   };
 
   maxMintPerAddress = async () => {
     if (this.contractInstance!.methods.MAX_TOTAL_MINT_PER_ADDRESS) {
-      const maxMint = await this.contractInstance!
-        .methods.MAX_TOTAL_MINT_PER_ADDRESS()
-        .call();
+      const maxMint =
+        await this.contractInstance!.methods.MAX_TOTAL_MINT_PER_ADDRESS().call();
       return parseInt(maxMint);
     } else {
       return Promise.resolve(10);
@@ -126,7 +127,9 @@ export class HangCore {
   };
 
   balanceOfAddress = async (address: string) => {
-    const balance = await this.contractInstance!.methods.balanceOf(address).call();
+    const balance = await this.contractInstance!.methods.balanceOf(
+      address
+    ).call();
 
     return parseInt(balance);
   };
@@ -240,27 +243,26 @@ export class HangCore {
         if (this.options.debug) console.debug('Early purchase flow');
 
         const { proof } = this.getProofForAddress(address);
-        return this.contractInstance!
-          .methods.earlyPurchase(quantity, proof)
-          .send(
-            {
-              from: address,
-              value: priceBig.multipliedBy(quantityBig).toString(),
-            },
-            this.postConfirm
-          );
+        return this.contractInstance!.methods.earlyPurchase(
+          quantity,
+          proof
+        ).send(
+          {
+            from: address,
+            value: priceBig.multipliedBy(quantityBig).toString(),
+          },
+          this.postConfirm
+        );
       } else {
         if (this.options.debug) console.debug('General purchase flow');
 
-        return this.contractInstance!
-          .methods.purchase(quantity)
-          .send(
-            {
-              from: address,
-              value: priceBig.multipliedBy(quantityBig).toString(),
-            },
-            this.postConfirm
-          );
+        return this.contractInstance!.methods.purchase(quantity).send(
+          {
+            from: address,
+            value: priceBig.multipliedBy(quantityBig).toString(),
+          },
+          this.postConfirm
+        );
       }
     });
   };
@@ -317,11 +319,11 @@ export class HangCore {
 
   fetchTotalMintedPadded = async () => {
     const totalMinted = await this.fetchTotalMinted();
-    return totalMinted + (Number(this.projectData?.pad_no_minted) || 0)
-  }
+    return totalMinted + (Number(this.projectData?.pad_no_minted) || 0);
+  };
 
   fetchCurrentPriceFormatted = async () => {
     const currentPrice = await this.fetchCurrentPrice();
     return Web3.utils.fromWei(currentPrice);
-  }
+  };
 }

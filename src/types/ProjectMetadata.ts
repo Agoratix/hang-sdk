@@ -7,7 +7,6 @@ export interface IProjectMetadata {
     id: number;
     platform: string;
     whitelist: string[];
-  },
+  };
   pad_no_minted: number;
 }
-
