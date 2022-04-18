@@ -37,16 +37,16 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "hang-sdk",
+  "name": "hangsdk",
   "author": "Azim Ahmed",
-  "module": "dist/hang-sdk.esm.js",
+  "module": "dist/hangsdk.esm.js",
   "size-limit": [
     {
-      "path": "dist/hang-sdk.cjs.production.min.js",
+      "path": "dist/hangsdk.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/hang-sdk.esm.js",
+      "path": "dist/hangsdk.esm.js",
       "limit": "10 KB"
     }
   ],
