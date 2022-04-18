@@ -5,7 +5,13 @@
   "npm": {
     "publish": true
   },
+  "git": {
+    "commitMessage": "chore(release): cut the v${version} release",
+    "tagName": "v${version}"
+  },
   "github": {
-    "release": true
+    "release": true,
+    "releaseName": "hang-sdk v${version} Released!",
+    "draft": true
   }
 }
