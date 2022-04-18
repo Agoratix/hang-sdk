@@ -52,7 +52,13 @@ function App() {
   });
   const [events, setEvents] = useState<any[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
-  const sdk = useMemo(() => new HangWalletPlugin('some-project-slug'), []);
+  const sdk = useMemo(
+    () =>
+      new HangWalletPlugin({
+        slug: 'prefill-info-test-live-from-home-2021-12-08-f88d',
+      }),
+    []
+  );
 
   const handleUpdateBalance = useCallback(async () => {
     const balance = await sdk.balanceOfCurrentWallet();

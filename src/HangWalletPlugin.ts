@@ -3,10 +3,10 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal, { ICoreOptions, IProviderOptions } from 'web3modal';
 
 import { networkMap } from './utils';
-import { HangCore } from './HangCore';
+import { HangCore, IHangCoreProps } from './HangCore';
+import { INFURA_ID } from './utils';
 
 const SKIPPED = 'skipped';
-const INFURA_ID = 'd09bd1bc72e6427d80fa37e01481cd34';
 const providerOptions: IProviderOptions = {
   walletconnect: {
     package: WalletConnectProvider,
@@ -16,8 +16,7 @@ const providerOptions: IProviderOptions = {
   },
 };
 
-export interface IHangWalletPluginOptions {
-  slug: string;
+export interface IHangWalletPluginOptions extends IHangCoreProps {
   web3ModalOptions?: Partial<ICoreOptions>;
 }
 
@@ -26,12 +25,13 @@ export class HangWalletPlugin extends HangCore {
   provider?: any;
   web3Modal: Web3Modal;
 
-  constructor(slug: string) {
-    super({ slug: 'tya' });
-    this.fetchProjectMetadata(slug);
+  constructor({ slug, web3ModalOptions, ...args }: IHangWalletPluginOptions) {
+    super({ slug, ...args });
+    this.fetchProjectMetadata();
     this.web3Modal = new Web3Modal({
       cacheProvider: true,
       providerOptions,
+      ...web3ModalOptions,
     });
   }
 

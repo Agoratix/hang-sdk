@@ -1,5 +1,7 @@
 import Web3 from 'web3';
 
+export const INFURA_ID = 'd09bd1bc72e6427d80fa37e01481cd34';
+
 export const MINT_STATUSES = {
   NOT_INITIATED: 0,
   IN_PROGRESS: 1,
@@ -51,7 +53,7 @@ export const networkMap: Record<number, IChain> = {
       symbol: 'RIN',
       decimals: 18,
     },
-    rpcUrls: ['https://rinkeby.infura.io/v3/'],
+    rpcUrls: [`https://rinkeby.infura.io/v3/${INFURA_ID}`],
     blockExplorerUrls: ['https://rinkeby.etherscan.io'],
   },
   5: {
@@ -87,6 +89,7 @@ export const CONTRACT_PLATFORMS = {
 };
 
 export const FORMATTED_ERRORS = {
+  'PROJECT_INFO_FETCCH_ERROR': 'Unable to fetch project information',
   'BASE_COLLECTION/CANNOT_MINT': "General onsale hasn't started yet",
   'BASE_COLLECTION/PURCHASE_DISABLED': 'Minting is currently disabled',
   'BASE_COLLECTION/INSUFFICIENT_ETH_AMOUNT':
@@ -100,3 +103,6 @@ export const FORMATTED_ERRORS = {
   'BASE_COLLECTION/CANNOT_MINT_PRESALE':
     "Please verify you're on the presale whitelist",
 };
+
+export const STG_HOST = 'https://www.headliner.page';
+export const PROD_HOST = 'https://www.hangnft.xyz';
