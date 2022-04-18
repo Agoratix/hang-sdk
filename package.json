@@ -3,12 +3,16 @@
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "repository": "https://github.com/Agoratix/hang-sdk",
   "files": [
     "dist",
     "src"
   ],
   "engines": {
     "node": ">=10"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "start": "tsdx watch",
@@ -19,11 +23,35 @@
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "release": "release-it"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "yarn lint --fix && yarn typescript"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
     }
   },
   "prettier": {
@@ -45,6 +73,11 @@
       "limit": "10 KB"
     }
   ],
+  "keywords": [
+    "web3",
+    "hang",
+    "sdk"
+  ],
   "dependencies": {
     "@walletconnect/web3-provider": "^1.7.7",
     "bignumber.js": "^9.0.2",
@@ -59,6 +92,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@release-it/conventional-changelog": "^4.3.0",
     "@size-limit/preset-small-lib": "^7.0.8",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-info": "^5.3.21",
@@ -69,7 +104,9 @@
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
     "babel-loader": "^8.2.4",
+    "commitlint": "^16.2.3",
     "husky": "^7.0.4",
+    "release-it": "^14.14.2",
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
