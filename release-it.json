@@ -4,8 +4,5 @@
   "safeBump": false,
   "npm": {
     "publish": true
-  },
-  "github": {
-    "release": true
   }
 }
