@@ -9,8 +9,15 @@
   },
   "git": {
     "commitMessage": "chore: Release ${version}",
-    "commitArgs": ["--no-verify"],
-    "pushArgs": ["--no-verify"]
+    "commitArgs": [
+      "--no-verify"
+    ],
+    "pushArgs": [
+      "--no-verify"
+    ],
+    "tagArgs": [
+      "--no-verify"
+    ]
   },
   "github": {
     "release": true,
