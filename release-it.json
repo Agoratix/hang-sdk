@@ -3,24 +3,9 @@
   "changelogCommand": "conventional-changelog -p angular | tail -n +3",
   "safeBump": false,
   "npm": {
-    "publish": true,
-    "ignoreVersion": true,
-    "allowSameVersion": true
-  },
-  "git": {
-    "commitMessage": "chore: Release ${version}",
-    "commitArgs": [
-      "--no-verify"
-    ],
-    "pushArgs": [
-      "--no-verify"
-    ],
-    "tagArgs": [
-      "--no-verify"
-    ]
+    "publish": true
   },
   "github": {
-    "release": true,
-    "autoGenerate": true
+    "release": true
   }
 }
