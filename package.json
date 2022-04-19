@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.3.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -24,13 +24,37 @@
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "release": "release-it"
+    "release": "release-it --ci"
   },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
     ]
   },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "hangsdk",
+  "author": "Azim Ahmed",
+  "module": "dist/hangsdk.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/hangsdk.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/hangsdk.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "keywords": [
+    "web3",
+    "hang",
+    "sdk"
+  ],
   "release-it": {
     "git": {
       "commitMessage": "chore: release ${version}",
@@ -48,30 +72,6 @@
       }
     }
   },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "name": "hang-sdk",
-  "author": "Azim Ahmed",
-  "module": "dist/hang-sdk.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/hang-sdk.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/hang-sdk.esm.js",
-      "limit": "10 KB"
-    }
-  ],
-  "keywords": [
-    "web3",
-    "hang",
-    "sdk"
-  ],
   "dependencies": {
     "@walletconnect/web3-provider": "^1.7.7",
     "bignumber.js": "^9.0.2",
