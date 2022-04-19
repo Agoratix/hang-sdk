@@ -4,11 +4,11 @@
   "safeBump": false,
   "npm": {
     "publish": true,
+    "ignoreVersion": true,
     "allowSameVersion": true
   },
   "git": {
-    "commitMessage": "chore: Release ${version}",
-    "tagAnnotation": "build(${version}): Release ${version}"
+    "commitMessage": "chore: Release ${version}"
   },
   "github": {
     "release": true,
