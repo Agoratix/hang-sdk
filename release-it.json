@@ -8,8 +8,7 @@
   },
   "git": {
     "commitMessage": "chore: Release ${version}",
-    "tagAnnotation": "Release ${version}"
-
+    "tagAnnotation": "build(${version}): Release ${version}"
   },
   "github": {
     "release": true,
