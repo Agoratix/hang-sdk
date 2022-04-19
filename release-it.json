@@ -8,7 +8,8 @@
     "allowSameVersion": true
   },
   "git": {
-    "commitMessage": "chore: Release ${version}"
+    "commitMessage": "chore: Release ${version}",
+    "commitArgs": ["--no-verify"]
   },
   "github": {
     "release": true,
