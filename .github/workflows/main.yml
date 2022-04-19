@@ -1,4 +1,4 @@
-name: MAIN
+name: CI
 on:
   push:
     branches:
@@ -49,5 +49,3 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-

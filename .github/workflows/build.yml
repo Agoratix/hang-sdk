@@ -1,4 +1,4 @@
-name: ALL
+name: CI
 on:
   push:
     - '*'
