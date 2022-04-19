@@ -24,7 +24,7 @@
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "release": "release-it --ci --verbose --no-verify"
+    "release": "release-it"
   },
   "commitlint": {
     "extends": [
