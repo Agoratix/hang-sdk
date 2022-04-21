@@ -11,6 +11,8 @@ Hang SDK is on a mission to help developers create DAPPs with ease and interact 
 Install the SDK
 ```
 npm i hang-sdk
+// OR
+yarn add hang-sdk
 ```
 ## Usage
 
@@ -55,7 +57,7 @@ const totalMinted = await sdk.fetchTotalMintedPadded();
 const currentPrice = await sdk.fetchCurrentPriceFormatted();
 ```
 
-Here we are using the above `SDK` methods to fetch contract related data and handling methods to update the state of the react app.
+Here we are using the above `SDK` methods to fetch the contract related data,  and the handling methods to update the state of the react app.
 ```
 const handleStateChange = useCallback(
     const [metadata, setMetadata] = useState<IMetadata>({
