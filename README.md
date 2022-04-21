@@ -16,6 +16,12 @@ yarn add hang-sdk
 ```
 ## Usage
 
+You can take a look at a working bare bones `SDK` powered demo ui [here](https://agoratix.github.io/hang-sdk/).
+
+You can check out the code of the demo react app at [examples/react-app](examples/react-app).
+
+Below we walk through the main points of the example implementation:
+
 Import the `HangWallet` plugin and the `Types` for the state change events that are available.
 
 ```
