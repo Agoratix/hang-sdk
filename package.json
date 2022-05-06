@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "parcel watch",
-    "build": "parcel build",
+    "build": "parcel build --no-scope-hoist",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "prepare": "parcel build && husky install",
