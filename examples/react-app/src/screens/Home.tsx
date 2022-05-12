@@ -53,8 +53,7 @@ export const Home = () => {
   const sdk = useMemo(
     () =>
       new HangWalletPlugin({
-        slug: 'polygon-sdk-test-contract-2023-05-05-b675',
-        mode: 'PROD',
+        slug: 'jerry-garcia-2022-04-26-468a',
       }),
     []
   );
@@ -238,6 +237,15 @@ export const Home = () => {
           Mint a token
         </Button>
       </Flex>
+      <Button
+        isLoading={!!loadingText}
+        loadingText={loadingText}
+        onClick={() => {
+          sdk.crossMint();
+        }}
+      >
+        Crossmint
+      </Button>
     </Flex>
   );
 };
