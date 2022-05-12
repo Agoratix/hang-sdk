@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>something</h1>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/hang-sdk@0.6.2/dist/index.js"></script>
+  <script>
+      const sdk = new HangWalletPlugin({
+        slug: 'jerry-garcia-2022-04-26-468a',
+      });
+      console.log(sdk);
+      sdk.events.on('STATE_CHANGE', () => sdk.mint());
+  </script>
+</html>
