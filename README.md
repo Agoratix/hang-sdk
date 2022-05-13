@@ -11,10 +11,10 @@ Hang SDK is on a mission to help developers create DAPPs with ease and interact 
 
 ### Script Tag
 ```
-<script src="https://cdn.jsdelivr.net/npm/hang-sdk@0.6.2/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hang-sdk/dist/index.js"></script>
 ```
 
-### React
+### Node Module
 
 Install the SDK
 ```
@@ -33,7 +33,7 @@ It is possible to load the SDK via a `<script></script>` tag. This will expose t
 - Next we define an `sdk` variable & set the project `slug`
 - Finally we listen for a `STATE_CHANGE` event. The first event of this kind will indicate the SDK is ready to work with.
 ```
-<script src="https://cdn.jsdelivr.net/npm/hang-sdk@0.6.2/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hang-sdk/dist/index.js"></script>
 <script>
     const sdk = new HangWalletPlugin({
       slug: 'jerry-garcia-2022-04-26-468a',
@@ -47,7 +47,7 @@ Otherwise interacting with the SDK is the same without regard to whether you are
 
 You can check out a working example of a script tag implementation at [examples/script-tag](examples/script-tag).
 
-### React
+### Node Module
 You can take a look at a working bare bones `SDK` powered demo ui [here](https://agoratix.github.io/hang-sdk/). You can check out the code of the demo react app at [examples/react-app](examples/react-app).
 
 #### Example
@@ -78,7 +78,7 @@ const sdk = useMemo(
 
 #### Using the SDK Methods
 
-The `SDK` now exposes set of methods that allow you to interact with the `Hang` smart contract, access account & transaction information, and listen for relevant state changes and errors. 
+The `SDK` now exposes set of methods that allow you to interact with the `Hang` smart contract, access account & transaction information, and listen for relevant state changes and errors. You can use all of these methods irrespective of whether you imported via Script Tag or as a Node Module.
 
 For instance you can:
 ```
@@ -98,7 +98,7 @@ const currentPrice = await sdk.fetchCurrentPriceFormatted();
 sdk.crossMint()
 ```
 
-##### Methods used in a React context
+##### Methods Used in an Example React App
 
 Here we are using the above `SDK` methods to fetch the contract related data,  and the handling methods to update the state of the react app.
 ```
