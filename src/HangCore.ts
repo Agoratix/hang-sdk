@@ -3,6 +3,7 @@ import { BigNumber } from 'bignumber.js';
 import { Contract } from 'web3-eth-contract';
 import keccak256 from 'keccak256';
 import { MerkleTree } from 'merkletreejs';
+import { clientNames, crossmintModalService } from '@crossmint/client-sdk-base';
 
 import {
   FORMATTED_ERRORS,
@@ -275,6 +276,44 @@ export class HangCore {
         );
       }
     });
+  };
+
+  crossMint = async () => {
+    const TESTCHAINS = [4];
+    const isPresaleActive = await this.isPresaleActive();
+    const nftCost =
+      isPresaleActive && this.projectData!.presale_price
+        ? this.projectData!.presale_price
+        : this.projectData!.price;
+    const crossmintEnabled = this.projectData!.enable_crossmint_checkout;
+    let crossmintId: string = '';
+    if (crossmintEnabled && isPresaleActive) {
+      crossmintId = this.projectData!.contract?.crossmint?.presale || '';
+    } else if (crossmintEnabled && !isPresaleActive) {
+      crossmintId = this.projectData!.contract?.crossmint?.onsale || '';
+    }
+
+    let crossmintEnvironment;
+    if (TESTCHAINS.includes(this.projectData!.contract?.chain_id)) {
+      crossmintEnvironment = 'staging';
+    }
+
+    const { connect } = crossmintModalService({
+      clientId: crossmintId,
+      showOverlay: false,
+      setConnecting: () => console.log('connecting'),
+      libVersion: '0.1.6-alpha.2',
+      environment: crossmintEnvironment,
+      clientName: clientNames.reactUi,
+    });
+
+    connect(
+      // @ts-ignore
+      { price: nftCost },
+      this.projectData?.collection_label,
+      this.projectData?.info.title,
+      this.projectData?.info.image
+    );
   };
 
   postConfirm = async (error: any, transactionHash: string) => {
