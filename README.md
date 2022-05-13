@@ -8,21 +8,51 @@ Hang SDK is on a mission to help developers create DAPPs with ease and interact 
 
 ## Getting Started
 
+
+### Script Tag
+```
+<script src="https://cdn.jsdelivr.net/npm/hang-sdk@0.6.2/dist/index.js"></script>
+```
+
+### React
+
 Install the SDK
 ```
 npm i hang-sdk
 // OR
 yarn add hang-sdk
 ```
+
 ## Usage
 
-You can take a look at a working bare bones `SDK` powered demo ui [here](https://agoratix.github.io/hang-sdk/).
+### Script Tag
+It is possible to load the SDK via a `<script></script>` tag. This will expose two variables on the `Window` object by which you can call the methods of the SDK. 
 
-You can check out the code of the demo react app at [examples/react-app](examples/react-app).
+#### Example
+- First load the SDK from the CDN (do this in its own script tag)
+- Next we define an `sdk` variable & set the project `slug`
+- Finally we listen for a `STATE_CHANGE` event. The first event of this kind will indicate the SDK is ready to work with.
+```
+<script src="https://cdn.jsdelivr.net/npm/hang-sdk@0.6.2/dist/index.js"></script>
+<script>
+    const sdk = new HangWalletPlugin({
+      slug: 'jerry-garcia-2022-04-26-468a',
+    });
+    console.log(sdk);
+    sdk.events.on('STATE_CHANGE', () => sdk.mint());
+</script>
+```
 
-Below we walk through the main points of the example implementation:
+Otherwise interacting with the SDK is the same without regard to whether you are using a React or Script Tag implementation
 
-Import the `HangWallet` plugin and the `Types` for the state change events that are available.
+You can check out a working example of a script tag implementation at [examples/script-tag](examples/script-tag).
+
+### React
+You can take a look at a working bare bones `SDK` powered demo ui [here](https://agoratix.github.io/hang-sdk/). You can check out the code of the demo react app at [examples/react-app](examples/react-app).
+
+#### Example
+
+Below we walk through the main points of the example implementation. Import the `HangWallet` plugin and the `Types` for the state change events that are available.
 
 ```
 import {
@@ -46,6 +76,8 @@ const sdk = useMemo(
   );
 ```
 
+#### Using the SDK Methods
+
 The `SDK` now exposes set of methods that allow you to interact with the `Hang` smart contract, access account & transaction information, and listen for relevant state changes and errors. 
 
 For instance you can:
@@ -61,7 +93,12 @@ const totalMinted = await sdk.fetchTotalMintedPadded();
 
 // retrieve the current price of the NFT
 const currentPrice = await sdk.fetchCurrentPriceFormatted();
+
+// trigger Fiat purchase flow with Crossmint's custodial wallet system
+sdk.crossMint()
 ```
+
+##### Methods used in a React context
 
 Here we are using the above `SDK` methods to fetch the contract related data,  and the handling methods to update the state of the react app.
 ```
@@ -126,6 +163,19 @@ The `SDK` defines other useful methods. Here is an example where `mint()` is cal
 sdk.mint(quantity);
 ```
 
+#### Mint with Crossmint
+The user can immediately mint using a credit or debit card even if they do not have a crypto wallet set up already. To trigger the [Crossmint](https://www.crossmint.io/) minting flow just call the `sdk.crossMint()` method. All of the necessary options will pre-populated by the `SDK`. 
+
+Here is an example:
+```
+<Button
+  onClick={() => {
+    sdk.crossMint();
+  }}
+>
+  Crossmint
+</Button>
+```
 ### See a working example
 
 If you want to see how all of this comes together to form a working UI you can see a React App example [examples/react-app](examples/react-app).
@@ -164,6 +214,14 @@ Call mint to create an NFT(s) on chain and pay for it with the funds from the co
 ```
 const quantity = 2
 sdk.mint(quantity)
+```
+
+#### sdk.crossMint()
+Call crossMint to trigger NFT minting via Crossmint's service. A user can pay via credit or debit card and manage the NFT in a custodial wallet.
+
+##### Example
+```
+sdk.crossMint()
 ```
 
 #### sdk.fetchTotalMintable() Promise`<number>`
