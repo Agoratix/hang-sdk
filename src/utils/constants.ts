@@ -105,4 +105,4 @@ export const FORMATTED_ERRORS = {
 };
 
 export const STG_HOST = 'https://www.headliner.page';
-export const PROD_HOST = 'https://www.hangnft.xyz';
+export const PROD_HOST = 'https://www.hang.xyz';
