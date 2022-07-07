@@ -53,7 +53,8 @@ export const Home = () => {
   const sdk = useMemo(
     () =>
       new HangWalletPlugin({
-        slug: 'jerry-garcia-2022-04-26-468a',
+        slug: 'hang-brand-example-2023-07-05-d5b9',
+        mode: 'PROD'
       }),
     []
   );

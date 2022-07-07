@@ -57,7 +57,7 @@ export const Coinbase = () => {
   const sdk = useMemo(
     () =>
       new HangWalletPlugin({
-        slug: 'polygon-sdk-test-contract-2023-05-05-b675',
+        slug: 'hang-brand-example-2023-07-05-d5b9',
         mode: 'PROD',
         web3ModalOptions: {
           providerOptions: {
