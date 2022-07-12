@@ -242,7 +242,7 @@ export const Home = () => {
         isLoading={!!loadingText}
         loadingText={loadingText}
         onClick={() => {
-          sdk.crossMint();
+          sdk.crossMint(quantity);
         }}
       >
         Crossmint
