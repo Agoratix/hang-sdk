@@ -378,5 +378,5 @@ export class HangCore {
 
   crossMintEnabled = () => {
     return this.projectData!.enable_crossmint_checkout;
-  }
+  };
 }
