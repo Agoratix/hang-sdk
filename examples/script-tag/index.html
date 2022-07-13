@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <h1>something</h1>
+    <button onclick="sdk.mint(1)">Mint 1 token</button>
+    <button id="crossmint" onclick="sdk.crossMint(1)" style="display: none">Mint 1 token through crossmint</button>
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/hang-sdk@0.7.3/dist/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hang-sdk@0.9.1/dist/index.js"></script>
   <script>
-      const sdk = new HangWalletPlugin({
-        slug: 'hang-brand-example-2023-07-05-d5b9',
-        mode: 'PROD',
-      });
-      sdk.events.on('STATE_CHANGE', () => sdk.mint());
+    const sdk = new HangWalletPlugin({
+      slug: 'hang-brand-example-2023-07-05-d5b9',
+      mode: 'PROD',
+    });
+
+    // show crossmint button if enabled
+    const showCrossmintButtonIfEnabled = async () => {
+      if (await sdk.crossMintEnabled()) {
+        document.getElementById('crossmint').style.display = "block";
+      }
+    }
+    sdk.events.on('STATE_CHANGE', showCrossmintButtonIfEnabled);
   </script>
 </html>

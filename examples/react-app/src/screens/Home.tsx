@@ -46,15 +46,19 @@ export const Home = () => {
   const [metadata, setMetadata] = useState<IMetadata>({
     totalMintable: -1,
     totalMinted: -1,
-    currentPrice: '',
+    currentPrice: ''
   });
   const [events, setEvents] = useState<any[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
+  const [crossMintEnabled, setCrossMintEnabled] = useState<boolean>(false);
+  const params = new URLSearchParams(window.location.search);
+  const sdkSlug = params.get('slug') || 'hang-brand-example-2023-07-05-d5b9'
+  const sdkMode = params.get('test') ? 'TEST' : 'PROD'
   const sdk = useMemo(
     () =>
       new HangWalletPlugin({
-        slug: 'hang-brand-example-2023-07-05-d5b9',
-        mode: 'PROD'
+        slug: sdkSlug,
+        mode: sdkMode
       }),
     []
   );
@@ -81,12 +85,15 @@ export const Home = () => {
       const totalMintable = await sdk.fetchTotalMintable();
       const currentPrice = await sdk.fetchCurrentPriceFormatted();
       const totalMinted = await sdk.fetchTotalMintedPadded();
+      const crossMintEnabled = await sdk.crossMintEnabled();
+
       setMetadata((prevState) => ({
         ...prevState,
         totalMintable,
         currentPrice,
-        totalMinted,
+        totalMinted
       }));
+      setCrossMintEnabled(crossMintEnabled);
     },
     [sdk]
   );
@@ -238,15 +245,17 @@ export const Home = () => {
           Mint a token
         </Button>
       </Flex>
-      <Button
-        isLoading={!!loadingText}
-        loadingText={loadingText}
-        onClick={() => {
-          sdk.crossMint(quantity);
-        }}
-      >
-        Crossmint
-      </Button>
+      { crossMintEnabled && (
+        <Button
+          isLoading={!!loadingText}
+          loadingText={loadingText}
+          onClick={() => {
+            sdk.crossMint(quantity);
+          }}
+        >
+          Crossmint
+        </Button>
+      )}
     </Flex>
   );
 };
