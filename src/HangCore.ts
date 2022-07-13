@@ -375,4 +375,8 @@ export class HangCore {
     const currentPrice = await this.fetchCurrentPrice();
     return Web3.utils.fromWei(currentPrice);
   };
+
+  crossMintEnabled = () => {
+    return this.projectData!.enable_crossmint_checkout;
+  }
 }
