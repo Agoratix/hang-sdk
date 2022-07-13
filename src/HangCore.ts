@@ -376,7 +376,15 @@ export class HangCore {
     return Web3.utils.fromWei(currentPrice);
   };
 
-  crossMintEnabled = () => {
-    return this.projectData!.enable_crossmint_checkout;
+  crossMintEnabled = async () => {
+    if (!this.projectData!.enable_crossmint_checkout) return false;
+
+    const isPresaleActive = await this.isPresaleActive();
+    const crossmintEnabled = this.projectData!.enable_crossmint_checkout;
+    if (crossmintEnabled && isPresaleActive) {
+      return this.projectData!.contract?.crossmint?.presale != null;
+    }
+
+    return this.projectData!.contract?.crossmint?.onsale != null;
   };
 }
