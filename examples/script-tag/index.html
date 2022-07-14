@@ -1,22 +1,42 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <button onclick="sdk.mint(1)">Mint 1 token</button>
-    <button id="crossmint" onclick="sdk.crossMint(1)" style="display: none">Mint 1 token through crossmint</button>
+    <select name="quantity" id="quantity-select">
+      <option value="1" selected>1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <button id="mint-button">Mint</button>
+    <button id="crossmint-button" style="display: none">Mint through crossmint</button>
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/hang-sdk@0.9.1/dist/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hang-sdk@0.10.1/dist/index.js"></script>
   <script>
-    const sdk = new HangWalletPlugin({
-      slug: 'hang-brand-example-2023-07-05-d5b9',
-      mode: 'PROD',
-    });
+    window.onload = () => {
+      const sdk = new HangWalletPlugin({
+        slug: 'hang-brand-example-2023-07-05-d5b9',
+        mode: 'PROD',
+      });
+      const selectElement = document.getElementById('quantity-select');
 
-    // show crossmint button if enabled
-    const showCrossmintButtonIfEnabled = async () => {
-      if (await sdk.crossMintEnabled()) {
-        document.getElementById('crossmint').style.display = "block";
+      // show crossmint button if enabled
+      const showCrossmintButtonIfEnabled = async () => {
+        if (await sdk.crossMintEnabled()) {
+          document.getElementById('crossmint-button').style.display = "block";
+        }
+      }
+
+      sdk.events.on('STATE_CHANGE', showCrossmintButtonIfEnabled);
+
+      // button event listeners
+      document.getElementById('mint-button').onclick = () => {
+        sdk.mint(selectElement.value)
+      }
+
+      document.getElementById('crossmint-button').onclick = () => {
+        sdk.crossMint(selectElement.value)
       }
     }
-    sdk.events.on('STATE_CHANGE', showCrossmintButtonIfEnabled);
   </script>
 </html>
