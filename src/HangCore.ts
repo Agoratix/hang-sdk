@@ -297,11 +297,10 @@ export class HangCore {
     if (TESTCHAINS.includes(this.projectData!.contract?.chain_id)) {
       crossmintEnvironment = 'staging';
     }
-
     const { connect } = crossmintModalService({
       clientId: crossmintId,
       showOverlay: false,
-      setConnecting: () => console.log('connecting'),
+      setConnecting: () => {},
       libVersion: '0.1.6-alpha.2',
       environment: crossmintEnvironment,
       clientName: clientNames.reactUi,
