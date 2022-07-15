@@ -308,7 +308,7 @@ export class HangCore {
 
     connect(
       // @ts-ignore
-      { price: nftCost * quantity, count: quantity },
+      { price: String(nftCost * quantity), count: quantity },
       this.projectData?.collection_label,
       this.projectData?.info.title,
       this.projectData?.info.image
