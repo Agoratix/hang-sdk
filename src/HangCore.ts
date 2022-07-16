@@ -27,11 +27,15 @@ export class HangCore {
   options: IHangCoreProps;
   events: CustomEvents;
   projectData?: IProjectMetadata;
+  presaleActive: boolean;
+  publicsaleActive: boolean;
 
   constructor(options: IHangCoreProps) {
     this.options = options;
     this.events = new CustomEvents();
     this.web3Instance = new Web3();
+    this.presaleActive = false;
+    this.publicsaleActive = false;
   }
 
   async fetchProjectMetadata() {
@@ -278,18 +282,17 @@ export class HangCore {
     });
   };
 
-  crossMint = async (quantity: number = 1) => {
+  crossMint = (quantity: number = 1) => {
     const TESTCHAINS = [4];
-    const isPresaleActive = await this.isPresaleActive();
     const nftCost =
-      isPresaleActive && this.projectData!.presale_price
+      this.presaleActive && this.projectData!.presale_price
         ? this.projectData!.presale_price
         : this.projectData!.price;
     const crossmintEnabled = this.projectData!.enable_crossmint_checkout;
     let crossmintId: string = '';
-    if (crossmintEnabled && isPresaleActive) {
+    if (crossmintEnabled && this.presaleActive) {
       crossmintId = this.projectData!.contract?.crossmint?.presale || '';
-    } else if (crossmintEnabled && !isPresaleActive) {
+    } else if (crossmintEnabled && this.publicsaleActive) {
       crossmintId = this.projectData!.contract?.crossmint?.onsale || '';
     }
 
@@ -378,12 +381,20 @@ export class HangCore {
   crossMintEnabled = async () => {
     if (!this.projectData!.enable_crossmint_checkout) return false;
 
-    const isPresaleActive = await this.isPresaleActive();
+    const presaleActive = await this.isPresaleActive();
+    const publicSaleActive = await this.isPublicSaleActive();
+
+    // temp fix for preventing async crossMint function
+    this.presaleActive = presaleActive;
+    this.publicsaleActive = publicSaleActive;
+
     const crossmintEnabled = this.projectData!.enable_crossmint_checkout;
-    if (crossmintEnabled && isPresaleActive) {
+    if (crossmintEnabled && presaleActive) {
       return this.projectData!.contract?.crossmint?.presale != null;
+    } else if (crossmintEnabled && publicSaleActive) {
+      return this.projectData!.contract?.crossmint?.onsale != null;
     }
 
-    return this.projectData!.contract?.crossmint?.onsale != null;
+    return false;
   };
 }
