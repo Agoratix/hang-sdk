@@ -31,7 +31,7 @@ export const networkMap: Record<number, IChain> = {
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: ['https://api.mycryptoapi.com/eth'],
+    rpcUrls: [`https://mainnet.infura.io/v3/${INFURA_ID}`],
     blockExplorerUrls: ['https://etherscan.io'],
   },
   3: {
