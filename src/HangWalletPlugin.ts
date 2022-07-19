@@ -5,18 +5,11 @@ import Web3Modal, { ICoreOptions, IProviderOptions } from 'web3modal';
 import { networkMap } from './utils';
 import { HangCore, IHangCoreProps } from './HangCore';
 import { INFURA_ID } from './utils';
-import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 
 const SKIPPED = 'skipped';
 const providerOptions: IProviderOptions = {
   walletconnect: {
     package: WalletConnectProvider,
-    options: {
-      infuraId: INFURA_ID,
-    },
-  },
-  walletlink: {
-    package: CoinbaseWalletSDK,
     options: {
       infuraId: INFURA_ID,
     },

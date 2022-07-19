@@ -80,7 +80,6 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.3.0",
     "@crossmint/client-sdk-base": "^0.1.2-alpha.2",
     "@parcel/transformer-typescript-tsc": "^2.5.0",
     "@walletconnect/web3-provider": "^1.7.7",
@@ -93,7 +92,7 @@
     "react-is": "^18.0.0",
     "tslib": "^2.4.0",
     "web3": "^1.7.1",
-    "web3modal": "^1.9.6"
+    "web3modal": "1.9.4"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
