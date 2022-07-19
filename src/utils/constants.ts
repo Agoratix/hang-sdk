@@ -89,7 +89,7 @@ export const CONTRACT_PLATFORMS = {
 };
 
 export const FORMATTED_ERRORS = {
-  PROJECT_INFO_FETCCH_ERROR: 'Unable to fetch project information',
+  PROJECT_INFO_FETCH_ERROR: 'Unable to fetch project information',
   'BASE_COLLECTION/CANNOT_MINT': "General onsale hasn't started yet",
   'BASE_COLLECTION/PURCHASE_DISABLED': 'Minting is currently disabled',
   'BASE_COLLECTION/INSUFFICIENT_ETH_AMOUNT':
@@ -102,6 +102,7 @@ export const FORMATTED_ERRORS = {
   'BASE_COLLECTION/PRESALE_INACTIVE': "Presale hasn't started yet",
   'BASE_COLLECTION/CANNOT_MINT_PRESALE':
     "Please verify you're on the presale whitelist",
+  INSUFFICIENT_ETH_BALANCE: 'Your balance is too low',
 };
 
 export const STG_HOST = 'https://www.headliner.page';

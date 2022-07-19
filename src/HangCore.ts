@@ -70,8 +70,8 @@ export class HangCore {
     } catch (ex) {
       this.events.emit('STATE_CHANGE', { isReady: false });
       this.events.emit('ERROR', {
-        type: 'PROJECT_INFO_FETCCH_ERROR',
-        message: FORMATTED_ERRORS['PROJECT_INFO_FETCCH_ERROR'],
+        type: 'PROJECT_INFO_FETCH_ERROR',
+        message: FORMATTED_ERRORS['PROJECT_INFO_FETCH_ERROR'],
       });
     }
   }
@@ -249,6 +249,13 @@ export class HangCore {
       const priceFromContract = await this.fetchCurrentPrice();
       const priceBig = new BigNumber(priceFromContract);
       const quantityBig = new BigNumber(quantity);
+      const totalCost = priceBig.multipliedBy(quantityBig);
+
+      const hasEnoughEthToMint = await this.walletHasEnoughBalance(
+        address,
+        totalCost
+      );
+      if (!hasEnoughEthToMint) return;
 
       if (this.options.debug) console.debug('presaleMode', presaleMode);
       if (this.options.debug)
@@ -264,7 +271,7 @@ export class HangCore {
         ).send(
           {
             from: address,
-            value: priceBig.multipliedBy(quantityBig).toString(),
+            value: totalCost.toString(),
           },
           this.postConfirm
         );
@@ -394,6 +401,26 @@ export class HangCore {
     } else if (crossmintEnabled && publicSaleActive) {
       return this.projectData!.contract?.crossmint?.onsale != null;
     }
+
+    return false;
+  };
+
+  walletBalance = async (address: string) => {
+    const balance = await this.web3Instance.eth.getBalance(address);
+    return balance;
+  };
+
+  walletHasEnoughBalance = async (address: string, totalCost: BigNumber) => {
+    const currentBalance = await this.walletBalance(address);
+    const currentBalanceEth = Web3.utils.fromWei(currentBalance);
+    const totalCostEth = Web3.utils.fromWei(totalCost.toString());
+
+    if (currentBalanceEth >= totalCostEth) return true;
+
+    this.events.emit('ERROR', {
+      type: 'INSUFFICIENT_ETH_BALANCE',
+      message: `${FORMATTED_ERRORS['INSUFFICIENT_ETH_BALANCE']}, you'll need at least ${totalCostEth} ETH + gas fees to continue`,
+    });
 
     return false;
   };

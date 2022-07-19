@@ -16,6 +16,9 @@ const providerOptions: IProviderOptions = {
   },
 };
 
+const CONNECT_KEY = 'HANG_CONNECT_CACHE';
+const LATEST_CONNECT_VERSION = '3';
+
 export interface IHangWalletPluginOptions extends IHangCoreProps {
   web3ModalOptions?: Partial<ICoreOptions>;
 }
@@ -37,7 +40,7 @@ export class HangWalletPlugin extends HangCore {
 
   autoconnect = async () => {
     if (this.web3Modal.cachedProvider) {
-      this.provider = this.provider || (await this.web3Modal.connect());
+      this.provider = this.provider || (await this.connectToWeb3Modal());
       this.web3(new Web3(this.provider));
       await this.onConnectComplete();
       return Promise.resolve();
@@ -48,12 +51,29 @@ export class HangWalletPlugin extends HangCore {
 
   connect = async (): Promise<void> => {
     try {
-      this.provider = await this.web3Modal.connect();
+      this.provider = await this.connectToWeb3Modal();
       this.web3(new Web3(this.provider));
       await this.onConnectComplete();
     } catch (e) {
       Promise.reject(e);
     }
+  };
+
+  connectToWeb3Modal = async () => {
+    const hangConnectVersion = localStorage.getItem(CONNECT_KEY);
+    if (!hangConnectVersion || hangConnectVersion != LATEST_CONNECT_VERSION) {
+      this.clearWalletConnectKeys();
+      localStorage.setItem(CONNECT_KEY, LATEST_CONNECT_VERSION);
+    }
+
+    return await this.web3Modal.connect();
+  };
+
+  clearWalletConnectKeys = () => {
+    Object.entries(localStorage).map((entry) => {
+      const key = entry[0];
+      if (key.startsWith('-walletlink')) localStorage.removeItem(key);
+    });
   };
 
   onConnectComplete = async () => {
