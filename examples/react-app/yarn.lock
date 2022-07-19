@@ -6163,8 +6163,9 @@
 
 "hang-sdk@file:../..":
   "resolved" "file:../.."
-  "version" "0.10.3"
+  "version" "0.10.4"
   dependencies:
+    "@coinbase/wallet-sdk" "^3.3.0"
     "@crossmint/client-sdk-base" "^0.1.2-alpha.2"
     "@parcel/transformer-typescript-tsc" "^2.5.0"
     "@walletconnect/web3-provider" "^1.7.7"

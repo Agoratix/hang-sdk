@@ -30,6 +30,8 @@ import {
   IWalletConnectedEventParams,
   IErrorEventParams,
   ITransactionSubmittedEventParams,
+  INFURA_ID,
+  networkMap
 } from 'hang-sdk';
 
 interface IMetadata {
@@ -58,7 +60,7 @@ export const Home = () => {
     () =>
       new HangWalletPlugin({
         slug: sdkSlug,
-        mode: sdkMode
+        mode: sdkMode,
       }),
     []
   );
